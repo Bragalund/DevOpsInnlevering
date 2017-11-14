@@ -1,0 +1,18 @@
+version: '2'
+services:
+  spring-server-image:
+    #image:                   <-- spesifiserer lokalt bilde(allerede bygget)
+    build:                    # Bygger bilde på Dockerfile
+      context: springserver   # Hvilken mappe Dockerfilen befinner seg
+      dockerfile: Dockerfile  # Angir navnet på dockerfilen
+    ports:                    # - <port utenfor container>:<applikasjonens port inne i containeren>
+      - 8080:8080
+
+
+  documentation-viewer-image:
+    build:                            # Bygger bilde på Dockerfile
+      context: documentation-viewer   # Mappen Dockerfilen befinner seg i
+      dockerfile: Dockerfile          # Navnet på dockerfilen
+    ports:                            # - <port utenfor container>:<applikasjonens port inne i containeren>
+      - 80:3000
+
