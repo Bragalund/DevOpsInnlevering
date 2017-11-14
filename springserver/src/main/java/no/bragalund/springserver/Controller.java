@@ -1,9 +1,6 @@
 package no.bragalund.springserver;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class Controller {
@@ -11,7 +8,8 @@ public class Controller {
     @RequestMapping(value = "/hostname", method = RequestMethod.GET)
     @ResponseBody
     public String getHostName() {
-        return System.getenv("HOSTNAME");
+        Host host = new Host();
+        return host.getHostname();
     }
 
     @RequestMapping(value = "/heartbeat", method = RequestMethod.GET)
