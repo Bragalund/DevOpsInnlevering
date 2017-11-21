@@ -1,9 +1,16 @@
 pipeline {
+
     agent any
+
     stages {
         stage('Build') {
+            tools {
+                    maven "maven"
+                    jdk "jdk"
+                }
             steps {
-               echo 'This is a minimal pipeline.'
+               sh('cd ./springserver')
+               sh('mvn clean install')
             }
         }
     }
