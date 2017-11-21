@@ -10,7 +10,7 @@ class SpringServer extends Component {
     }
 
     getData() {
-        return fetch('http://localhost:8080/hostname', {
+        return fetch('http://springserver:8080/hostname', {
             method: 'GET',
             header: {
                 'Accept': 'application/json',
