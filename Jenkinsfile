@@ -14,11 +14,9 @@ pipeline {
                 }
               }
         }
-        stage('Build documentation-viewer') {
+        stage('Build docker-images') {
               steps {
-                dir('documentation-viewer'){
-                  sh('npm install')
-                }
+                  sh('docker-compose build')
               }
         }
     }
