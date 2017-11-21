@@ -4,16 +4,15 @@ pipeline {
 
     stages {
         stage('Build') {
-            dir('springserver'){
               tools {
                    maven "maven"
                    jdk "jdk"
                }
               steps {
+                dir('springserver'){
                    sh('mvn clean install')
+                }
               }
-            }
-
         }
     }
 }
