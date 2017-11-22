@@ -13,8 +13,7 @@ public class Controller {
     }
 
     @RequestMapping(value = "/heartbeat", method = RequestMethod.GET)
-    @ResponseBody
-    public String getHeartBeat() {
+    public @ResponseBody String getHeartBeat() {
         return "<3";
     }
 
