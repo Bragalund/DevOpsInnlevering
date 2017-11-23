@@ -3,6 +3,13 @@ pipeline {
     agent any
 
     stages {
+        stage('Configure jenkins') {
+          steps {
+            dir('ansible') {
+               sh('ansible-playbook instal-programs-playbook.yml')
+            }
+          }
+        }
         stage('Test springserver') {
              tools {
                  maven "maven"
@@ -31,5 +38,14 @@ pipeline {
                   sh('docker-compose build')
               }
         }
+        stage('Deploy') {
+              steps {
+                dir('ansible'){
+                  sh('ansible-playbook deploy-playbook.yml')
+                }
+              }
+        }
+
+
     }
 }

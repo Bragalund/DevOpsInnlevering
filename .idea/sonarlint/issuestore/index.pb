@@ -23,3 +23,15 @@ X
 (documentation-viewer/src/SpringServer.js,e/3/e3261a88f3f9dbed47297e54702d83d32b9884e3
 ;
 Jenkinsfile,0/c/0c2c5c506cef0ed2d3ad2b7e45e97980b66f5520
+E
+ansible/git-create.sh,c/d/cd5535699b4b64d860b394e3900d09211b594b49
+t
+Dspringserver/src/test/java/no/bragalund/springserver/TestConfig.java,9/d/9d602a9670dfbdfb6fefb1eeba007b84dd5a09b8
+†
+Vspringserver/src/test/java/no/bragalund/springserver/SpringserverApplicationTests.java,d/1/d19ac9690133e676755d2fd9d7b32a5ad7dc8a90
+O
+ansible/git-create-playbook.yml,3/3/338bbe045447fd29e60927dea27f89df4aec6b4d
+K
+ansible/deploy-playbook.yml,7/4/74e33d0e9aa0d9d27cd17489c88d5ded70740e66
+K
+ansible/consul-playbook.yml,d/0/d001e0f3b227900d6e4c554f82069b36ecb50d6f

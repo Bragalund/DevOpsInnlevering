@@ -1,0 +1,58 @@
+---
+- hosts: jenkins
+  become: true
+
+  environment:
+    CLOUD_SDK_REPO: "cloud-sdk-$(lsb_release -c -s)"
+
+  tasks:
+
+   - name: Make apt use https
+     apt:
+       name: apt-transport-https
+       state: present
+
+   - name: install unzip
+     apt:
+       name: unzip
+       state: present
+
+   - name: Extract consul executable to path
+     unarchive:
+       src: https://releases.hashicorp.com/consul/1.0.1/consul_1.0.1_linux_amd64.zip
+       dest: /usr/local/bin
+       remote_src: yes
+
+#   - name: start consul
+#     shell: consul agent
+#     when:
+#      - service: name=consul pattern=consul
+
+#   - name: export gcloud environment variable
+#     apt: name=CLOUD_SDK_REPO state=installed
+#     environment: cloud-sdk-$(lsb_release -c -s)
+
+   - name: add gcloud to repo
+     apt_repository:
+       repo: deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main
+       state: present
+
+   - name: add rsa-key to gcloud
+     authorized_key:
+       user: ubuntu
+       state: present
+       key: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+
+   - name: Update
+     apt:
+       update_cache: yes
+
+   - name: Install gcloud-cli
+     apt:
+       name: google-cloud-sdk
+       state: present
+
+   - name: Install kubectl
+     apt:
+       name: kubectl
+       state: present

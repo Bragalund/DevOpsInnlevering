@@ -1,0 +1,29 @@
+---
+- name: Install ansible
+  hosts: jenkins
+  become: true
+
+  tasks:
+    - name: Update and upgrade
+      apt:
+          upgrade: yes
+          update_cache: yes
+
+    - name: Get required software
+      apt:
+        name: software-properties-common
+        state: present
+
+    - name: Add repository to apt list
+      apt_repository:
+        repo: ppa:ansible/ansible
+        state: present
+
+    - name: Update again
+      apt:
+          update_cache: yes
+
+    - name: Install ansible
+      apt:
+        name: ansible
+        state: present

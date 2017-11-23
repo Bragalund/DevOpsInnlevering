@@ -1,0 +1,8 @@
+---
+- hosts:
+  vars:
+    password: {{ password1 }}
+  remote_user: {{ user1 }}
+  tasks:
+  - debug: msg="username is {{ lookup('env', 'user1') }}"
+
