@@ -6,7 +6,7 @@ pipeline {
         stage('Configure jenkins') {
           steps {
             dir('ansible') {
-               sh('ansible-playbook instal-programs-playbook.yml')
+               sh('sudo ansible-playbook instal-programs-playbook.yml')
             }
           }
         }
