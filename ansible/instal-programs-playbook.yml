@@ -37,6 +37,7 @@
        repo: deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main
        state: present
 
+# TODO fix privilege escalation
    - name: add rsa-key to gcloud
      authorized_key:
        user: ubuntu

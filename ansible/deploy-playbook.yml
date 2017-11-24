@@ -1,8 +1,30 @@
 ---
 - hosts:
-  vars:
-    password: {{ password1 }}
-  remote_user: {{ user1 }}
+  environment:
+    PROJECT_ID="devopseksamen"
+    DATA_CENTER="europe-west3-a"
+    CLUSTER_NAME="dev-op-eksamen-cluster"
+    LATEST_DOCKER_IMAGE="docker ps -n 2"
   tasks:
-  - debug: msg="username is {{ lookup('env', 'user1') }}"
+
+   - name: tag docker-images
+     shell: docker tag [IMAGE] [HOSTNAME]/[PROJECT-ID]/[IMAGE]
+
+
+   - name: log in
+     shell: gcloud init
+
+   - name: autoriser med gcloud private-key
+     shell: gcloud auth activate-service-account --key-file [KEY_FILE]
+
+   - name: choose existing cluster and start proxy
+     shell: gcloud container clusters get-credentials dev-op-eksamen-cluster --zone europe-west3-a --project devopseksamen
+     shell: kubectl proxy
+
+   - name: run new app on cluster
+     shell: kubectl run springserver --image=springserver --port 8080
+     shell: kubectl run documentationviewer --image=documentationviewer --port 80
+
+   - name: expose app by port on internet
+     shell: kubectl expose deployment documentationviewer --type=LoadBalancer --port 80 --target-port 80
 

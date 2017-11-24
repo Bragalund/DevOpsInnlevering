@@ -33,5 +33,9 @@ O
 ansible/git-create-playbook.yml,3/3/338bbe045447fd29e60927dea27f89df4aec6b4d
 K
 ansible/deploy-playbook.yml,7/4/74e33d0e9aa0d9d27cd17489c88d5ded70740e66
-K
-ansible/consul-playbook.yml,d/0/d001e0f3b227900d6e4c554f82069b36ecb50d6f
+S
+#ansible/instal-ansible-playbook.yml,2/2/22b7eb96ffb2ca4ae624d0c050bf2d7bf92c1540
+B
+ansible/.gitignore,e/9/e936bf611be6536bdee3ececc71dec92beff7772
+T
+$ansible/instal-programs-playbook.yml,b/0/b0840f39675e982d0f6fd95dbb180071dec3e61b
