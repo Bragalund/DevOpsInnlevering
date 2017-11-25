@@ -32,11 +32,14 @@ pipeline {
                     sh('docker build -t eu.gcr.io/devopseksamen/springserver:v2 .')
                   }
               }
+        }
+        stage('Build documentation-viewer image'){
               steps {
                 dir('documentation-viewer'){
                     sh('docker build -t eu.gcr.io/devopseksamen/documentationviewer:v2 .')
                 }
               }
         }
+
     }
 }
