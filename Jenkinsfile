@@ -26,19 +26,17 @@ pipeline {
                 }
               }
         }
-        stage('Build docker-images') {
+        stage('Build springserver image') {
               steps {
-                  sh('docker-compose build')
+                dir('springserver'){
+                    sh('docker build -t eu.gcr.io/devopseksamen/springserver:v2 .')
+                  }
               }
-        }
-        stage('Deploy') {
               steps {
-                dir('ansible'){
-                  sh('ansible-playbook deploy-playbook.yml')
+                dir('documentation-viewer'){
+                    sh('docker build -t eu.gcr.io/devopseksamen/documentationviewer:v2 .')
                 }
               }
         }
-
-
     }
 }

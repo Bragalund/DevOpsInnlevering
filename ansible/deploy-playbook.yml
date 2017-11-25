@@ -1,14 +1,15 @@
 ---
 - hosts:
-  environment:
-    PROJECT_ID="devopseksamen"
-    DATA_CENTER="europe-west3-a"
-    CLUSTER_NAME="dev-op-eksamen-cluster"
-    LATEST_DOCKER_IMAGE="docker ps -n 2"
   tasks:
 
-   - name: tag docker-images
-     shell: docker tag [IMAGE] [HOSTNAME]/[PROJECT-ID]/[IMAGE]
+# environment variables set
+
+# $DEV_OPS_DATACENTER
+# $DEV_OPS_PROJECT_ID
+# $DEV_OPS_CLUSTER_NAME
+
+# LATEST_DOCKER_IMAGE="docker ps -n 2"
+
 
 
    - name: log in
@@ -18,7 +19,7 @@
      shell: gcloud auth activate-service-account --key-file [KEY_FILE]
 
    - name: choose existing cluster and start proxy
-     shell: gcloud container clusters get-credentials dev-op-eksamen-cluster --zone europe-west3-a --project devopseksamen
+     shell: gcloud container clusters get-credentials $DEV_OPS_CLUSTER_NAME --zone $DEV_OPS_DATACENTER --project $DEV_OPS_PROJECT_ID
      shell: kubectl proxy
 
    - name: run new app on cluster

@@ -1,0 +1,5 @@
+---
+- hosts: jenkins
+  tasks:
+   - name: write environment variables
+     debug:

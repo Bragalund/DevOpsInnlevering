@@ -39,3 +39,5 @@ B
 ansible/.gitignore,e/9/e936bf611be6536bdee3ececc71dec92beff7772
 T
 $ansible/instal-programs-playbook.yml,b/0/b0840f39675e982d0f6fd95dbb180071dec3e61b
+V
+&ansible/instal-programs-playbook.retry,e/4/e4e72a9477d646d4accde8cbc84695cef6a3c9db

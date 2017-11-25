@@ -1,6 +1,6 @@
 ---
 - hosts: jenkins
-  #become: true
+  become: true
 
   environment:
     CLOUD_SDK_REPO: "cloud-sdk-$(lsb_release -c -s)"
@@ -17,14 +17,33 @@
        name: unzip
        state: present
 
-   - name: Extract consul executable to path
+   - name: Extract envconsul executable to path
      unarchive:
-       src: https://releases.hashicorp.com/consul/1.0.1/consul_1.0.1_linux_amd64.zip
+       src: https://releases.hashicorp.com/envconsul/0.6.2/envconsul_0.6.2_linux_amd64.tgz
        dest: /usr/local/bin
        remote_src: yes
 
+   - name: change permissions on envconsul
+     file: dest=/usr/local/bin mode=a+x
+
+   - name: Install pip
+     apt:
+       name: python-pip
+       state: present
+
+   - name: Install docker
+     apt:
+       name: docker-ce
+       state: present
+
+   - name: Install docker-compose
+     pip:
+       name: docker-compose
+       state: present
+
+
 #   - name: start consul
-#     shell: consul agent
+#     shell: consul agent -dev
 #     when:
 #      - service: name=consul pattern=consul
 
@@ -36,18 +55,15 @@
      apt_repository:
        repo: deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main
        state: present
+       update_cache: yes
 
-# TODO fix privilege escalation
-   - name: add rsa-key to gcloud
+
+   - name: add gcloud public key to apt
      authorized_key:
        user: ubuntu
        state: present
        key: https://packages.cloud.google.com/apt/doc/apt-key.gpg
        validate_certs: True
-
-   - name: Update
-     apt:
-       update_cache: yes
 
    - name: Install gcloud-cli
      apt:
@@ -58,3 +74,11 @@
      apt:
        name: kubectl
        state: present
+
+
+   - name: Remove dependencies that are no longer required
+     apt:
+       autoremove: yes
+       name: "*"
+       state: latest
+       update_cache: yes
