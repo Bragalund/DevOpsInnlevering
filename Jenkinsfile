@@ -43,7 +43,7 @@ pipeline {
         stage('Deploy app') {
             steps {
               dir('ansible') {
-                    sh('ansible-playbook deploy.yml')
+                    sh('ansible-playbook -i "localhost," -c local deploy.yml')
                 }
             }
         }
