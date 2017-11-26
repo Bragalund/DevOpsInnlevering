@@ -42,13 +42,16 @@ pipeline {
         }
         stage('Push docker images to google cloud registry') {
             steps {
-                sh('gcloud docker -- push eu.gcr.io/devopseksamen/documentationviewer:v3')
-                sh('gcloud docker --push eu.gcr.io/devopseksamen/springserver:v3')
+                dir('ansible') {
+                    sh('ansible-playbook deploy-playbook.yml')
+                }
             }
         }
-        stage('Update existing deployment') {
+        stage('Deploy') {
             steps {
-                sh('kubectl set image deployment/springserver springserver=eu.gcr.io/devopseksamen/springserver:v3')
+              dir('ansible') {
+                    sh('ansible-playbook deploy.yml')
+                }
             }
         }
 

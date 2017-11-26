@@ -1,0 +1,169 @@
+---
+- hosts: jenkins
+  become: true
+
+  tasks:
+
+   - name: install python2
+     raw: sudo apt-get -y install python-simplejson
+
+   - name: Install prerequisites
+     apt: name=python-software-properties state=present
+
+   - name: Add deadsnakes repo
+     apt_repository: repo="ppa:fkrull/deadsnakes"
+
+   - name: Install python
+     apt: name="python3.6" state=present
+
+   - name: Install apt-transport-https and make apt use https
+     apt: name='apt-transport-https' state='present' update_cache='yes'
+
+   - name: Add repo ppa:webupd8team/java to src.list
+     apt_repository: repo='ppa:webupd8team/java' state='present'
+
+   - name: set licence selected
+     shell: /bin/echo debconf shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
+
+   - name: set licence seen
+     shell: /bin/echo debconf shared/accepted-oracle-license-v1-1 seen true | /usr/bin/debconf-set-selections
+
+   - name: install oracle java and set it as default
+     apt: name='oracle-java8-installer' state=latest update_cache=yes
+
+   - name: Add jenkins public key to apt
+     apt_key: url='https://pkg.jenkins.io/debian-stable/jenkins.io.key state=present'
+
+   - name: Add jenkins to apt-repo
+     apt_repository: repo='deb https://pkg.jenkins.io/debian-stable binary/' state='present' filename='jenkins' update_cache='yes'
+
+   - name: Install jenkins
+     apt: name='jenkins' state='present' update_cache='yes'
+
+   - name: Install git
+     apt: name='git' state='present' update_cache='yes'
+
+   - name: install nginx
+     apt: name='nginx' state='present' update_cache='yes'
+
+   - name: Download letsencrypt to opt-folder from github
+     git:
+       repo: 'https://github.com/letsencrypt/letsencrypt'
+       dest: /opt/letsencrypt
+
+   - name: install unzip
+     apt:
+       name: unzip
+       state: present
+
+   - name: Update and upgrade
+     apt:
+      upgrade: yes
+      update_cache: yes
+
+   - name: Get required software
+     apt:
+      name: software-properties-common
+      state: present
+
+   - name: Add repository to apt list
+     apt_repository:
+       repo: ppa:ansible/ansible
+       state: present
+
+   - name: Update again
+     apt:
+        update_cache: yes
+
+   - name: Install ansible
+     apt:
+       name: ansible
+       state: present
+
+   - name: Extract envconsul executable to path
+     unarchive:
+       src: https://releases.hashicorp.com/envconsul/0.6.2/envconsul_0.6.2_linux_amd64.tgz
+       dest: /usr/local/bin
+       remote_src: yes
+
+   - name: change permissions on envconsul
+     file: dest=/usr/local/bin mode=a+x
+
+   - name: Install pip
+     apt:
+       name: python-pip
+       state: present
+
+   - name: Install docker
+     apt:
+       name: docker-ce
+       state: present
+
+   - name: Install docker-compose
+     pip:
+       name: docker-compose
+       state: present
+
+   - name: install nginx
+     apt: name='nginx' state='present' update_cache='yes'
+
+#  google-cloud-sdk bør lastes ned fra https://cloud.google.com/sdk/downloads og deretter flyttes til egnet mappe.
+#  Deretter burde man lage en symlink til gcloud-executable i bin-mappen
+
+#  google-cloud-sdk bør IKKE installeres med apt/apt-get
+#  Det vil da ikke fungere å benytte kubectl på ordentlig måte med google cloud(skytjenesten)
+
+   - name: Download and unzip google-cloud-sdk to opt-folder
+     unarchive:
+       src: https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-180.0.1-linux-x86_64.tar.gz
+       dest: /opt/
+       remote_src: yes
+
+   - name: Check that the gcloud symlink exists
+     stat:
+       path: /usr/local/bin/gcloud
+     register: stat_result_gcloud
+
+   - name: run install script for google-cloud-sdk when not installed
+     shell: sh /opt/google-cloud-sdk/install.sh        #Creates symlink for gcloud-executable and some other stuff...
+     when: stat_result_gcloud.stat.exists == False
+
+   - name: check that kubectl symlink exists on system
+     stat:
+       path: /usr/local/bin/kubectl
+     register: stat_result_kubectl
+
+   - name: Install kubectl with gcloud when not installed
+     shell: gcloud components install kubectl                       # Install kubectl with gcloud
+     shell: ln -s /opt/google-cloud-sdk/bin/kubectl /usr/local/bin  # Create symlink for it
+     when: stat_result_kubectl.stat.exists == False
+
+
+
+
+#   - name: add gcloud to repo
+#   - apt_repository: repo='deb http://packages.cloud.google.com/apt cloud-sdk-xenial main' state='present' filename='google-cloud-sdk' update_cache='yes'
+
+#   - name: add gcloud public key to apt
+#   - apt_key: url='https://packages.cloud.google.com/apt/doc/apt-key.gpg' state=present'
+
+
+#   - name: Install gcloud-cli
+#     apt:
+#       name: google-cloud-sdk
+#       state: present
+
+# kubectl må installeres som "component av google-cloud-sdk" for å fungere med google cloud(skytjenesten)
+# Derfor ikke mulig å installere med apt/apt-get
+
+#   - name: Install kubectl
+#     apt:
+#       name: kubectl
+#       state: present
+
+#   - name: Remove dependencies that are no longer required
+#     apt:
+#       autoremove: yes
+#       name: "*"
+#       state: latest
+#       update_cache: yes

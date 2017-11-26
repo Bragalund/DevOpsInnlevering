@@ -1,0 +1,36 @@
+---
+- hosts:
+  become: true
+  tasks:
+
+#   - name: log in
+#     shell: gcloud init
+
+   - name: autoriser med gcloud private-key
+     shell: gcloud auth activate-service-account --key-file /home/ubuntu/DevOpsEksamen-fd8bbc5d8acd.json
+
+   - name: set default configurations
+     shell: gcloud config set project ${DEV_OPS_PROJECT_ID}
+     shell: gcloud config set compute/zone ${DEV_OPS_ZONE}
+
+   - name: push docker images to container registry
+     shell: gcloud docker -- push eu.gcr.io/${DEV_OPS_PROJECT_ID}/documentationviewer:v3
+     shell: gcloud docker -- push eu.gcr.io/${DEV_OPS_PROJECT_ID}/springserver:v3
+
+   - name: choose existing cluster and get credentials
+     shell: gcloud container clusters get-credentials ${DEV_OPS_CLUSTER}
+
+   - name: Run image on cluster
+     shell: kubectl run springserver --image=gcr.io/${DEV_OPS_PROJECT_ID}/springserver:v3 --port 8080
+
+   - name: update already running app
+     shell: kubectl set image deployment/springserver springserver=eu.gcr.io/${DEV_OPS_PROJECT_ID}/springserver:v3
+     #shell: kubectl expose deployment springserver --type=LoadBalancer --port 80 --target-port 8080
+
+# environment variables set
+
+# $DEV_OPS_DATACENTER
+# $DEV_OPS_PROJECT_ID
+# $DEV_OPS_CLUSTER_NAME
+
+# LATEST_DOCKER_IMAGE="docker ps -n 2"

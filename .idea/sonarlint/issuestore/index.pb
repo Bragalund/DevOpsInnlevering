@@ -41,3 +41,9 @@ T
 $ansible/instal-programs-playbook.yml,b/0/b0840f39675e982d0f6fd95dbb180071dec3e61b
 V
 &ansible/instal-programs-playbook.retry,e/4/e4e72a9477d646d4accde8cbc84695cef6a3c9db
+I
+ansible/test-playbook.yml,4/c/4cce93f04e2440e750efc4114a8b2ac9cf4e2999
+S
+#ansible/generate-self-signed-ssl.sh,f/1/f148bab723f17f97cb5617fda88d590c7719bd8c
+J
+ansible/instal-jenkins.yml,8/9/89d4c02da905a1ae8f60606deb2b04715beacfa3
