@@ -14,17 +14,18 @@
 #     shell: gcloud config set compute/zone ${DEV_OPS_ZONE}
 
    - name: push docker images to container registry
-     shell: gcloud docker -- push eu.gcr.io/${DEV_OPS_PROJECT_ID}/documentationviewer:v3
-     shell: gcloud docker -- push eu.gcr.io/${DEV_OPS_PROJECT_ID}/springserver:v3
+     shell: gcloud docker -- push eu.gcr.io/devopseksamen/springserver:v3
+     become: true
+#     shell: gcloud docker -- push eu.gcr.io/${DEV_OPS_PROJECT_ID}/documentationviewer:v3
 
    - name: choose existing cluster and get credentials
-     shell: gcloud container clusters get-credentials ${DEV_OPS_CLUSTER}
+     shell: gcloud container clusters get-credentials dev-ops-cluster
 
    - name: Run image on cluster
-     shell: kubectl run springserver --image=gcr.io/${DEV_OPS_PROJECT_ID}/springserver:v3 --port 8080
+     shell: kubectl run springserver --image=gcr.io/devopseksamen/springserver:v3 --port 8080
 
    - name: update already running app
-     shell: kubectl set image deployment/springserver springserver=eu.gcr.io/${DEV_OPS_PROJECT_ID}/springserver:v3
+     shell: kubectl set image deployment/springserver springserver=eu.gcr.io/devopseksamen/springserver:v3
      #shell: kubectl expose deployment springserver --type=LoadBalancer --port 80 --target-port 8080
 
 # environment variables set
