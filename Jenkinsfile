@@ -40,14 +40,7 @@ pipeline {
                 }
               }
         }
-        stage('Push docker images to google cloud registry') {
-            steps {
-                dir('ansible') {
-                    sh('ansible-playbook deploy-playbook.yml')
-                }
-            }
-        }
-        stage('Deploy') {
+        stage('Deploy app') {
             steps {
               dir('ansible') {
                     sh('ansible-playbook deploy.yml')
