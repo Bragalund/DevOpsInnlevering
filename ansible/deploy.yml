@@ -9,9 +9,9 @@
    - name: autoriser med gcloud private-key
      shell: gcloud auth activate-service-account --key-file /home/ubuntu/DevOpsEksamen-fd8bbc5d8acd.json
 
-   - name: set default configurations
-     shell: gcloud config set project ${DEV_OPS_PROJECT_ID}
-     shell: gcloud config set compute/zone ${DEV_OPS_ZONE}
+#   - name: set default configurations
+#     shell: gcloud config set project ${DEV_OPS_PROJECT_ID}
+#     shell: gcloud config set compute/zone ${DEV_OPS_ZONE}
 
    - name: push docker images to container registry
      shell: gcloud docker -- push eu.gcr.io/${DEV_OPS_PROJECT_ID}/documentationviewer:v3
