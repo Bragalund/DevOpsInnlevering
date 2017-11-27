@@ -3,15 +3,18 @@
   become: true
   tasks:
 
+# TODO
+# To run this: ansible-playbook -i "localhost," -c local ~/Documents/DevOps/DevOpsInnlevering/ansible/deploy.yml --extra-vars 'ansible_become_pass='
+
 #   - name: log in
 #     shell: gcloud init
 
    - name: autoriser med gcloud private-key
      shell: gcloud auth activate-service-account --key-file /home/ubuntu/DevOpsEksamen-fd8bbc5d8acd.json
 
-#   - name: set default configurations
-#     shell: gcloud config set project ${DEV_OPS_PROJECT_ID}
-#     shell: gcloud config set compute/zone ${DEV_OPS_ZONE}
+   - name: set default configurations
+     shell: gcloud config set project devopseksamen
+     shell: gcloud config set compute/zone europe-west3-a
 
    - name: push docker images to container registry
      shell: gcloud docker -- push eu.gcr.io/devopseksamen/springserver:v3
@@ -19,10 +22,10 @@
 #     shell: gcloud docker -- push eu.gcr.io/${DEV_OPS_PROJECT_ID}/documentationviewer:v3
 
    - name: choose existing cluster and get credentials
-     shell: gcloud container clusters get-credentials dev-ops-cluster
-
-   - name: Run image on cluster
-     shell: kubectl run springserver --image=gcr.io/devopseksamen/springserver:v3 --port 8080
+     shell: gcloud container clusters get-credentials dev-ops-cluster --zone europe-west3-a --project devopseksamen
+#
+#   - name: Run image on cluster
+#     shell: kubectl run springserver --image=gcr.io/devopseksamen/springserver:v3 --port 8080
 
    - name: update already running app
      shell: kubectl set image deployment/springserver springserver=eu.gcr.io/devopseksamen/springserver:v3
