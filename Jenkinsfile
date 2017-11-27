@@ -50,7 +50,7 @@ pipeline {
         stage('Deploy app') {
             steps {
               dir('ansible') {
-                    sh('ansible-playbook -i "localhost," -c local deploy.yml  --extra-vars "ansible_become_pass=${SOMETHING}"')
+                    sh('ansible-playbook -i "localhost," -c local deploy.yml')
                 }
             }
         }
