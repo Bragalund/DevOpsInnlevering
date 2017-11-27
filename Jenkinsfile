@@ -55,6 +55,9 @@ pipeline {
             }
         }
         stage('Clean up after deploy') {
+            tools {
+                             maven "maven"
+            }
             steps {
               dir('springserver') {
                    sh('mvn clean')
