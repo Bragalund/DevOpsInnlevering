@@ -3,6 +3,13 @@ pipeline {
     agent any
 
     stages {
+        stage('Instal programs with ansible'){
+            steps {
+              dir('ansible'){
+                sh('ansible-playbook -i "localhost," -c local main.yml')
+              }
+            }
+        }
         stage('Test springserver') {
              tools {
                  maven "maven"
