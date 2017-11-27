@@ -10,7 +10,7 @@ public class Host {
     }
 
     public String getHostname() {
-        return "Docker-container_id is: "+System.getenv("HOSTNAME");
+        return System.getenv("HOSTNAME");
     }
 
     public void setHostname(String hostname) {
