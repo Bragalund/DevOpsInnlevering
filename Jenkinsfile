@@ -36,14 +36,14 @@ pipeline {
         stage('Build springserver image') {
               steps {
                 dir('springserver'){
-                    sh('docker build -t eu.gcr.io/devopseksamen/springserver:v3 .')
+                    sh('docker build -t eu.gcr.io/devopseksamen/springserver:${BUILD_NUMBER} .')
                   }
               }
         }
         stage('Build documentation-viewer image'){
               steps {
                 dir('documentation-viewer'){
-                    sh('docker build -t eu.gcr.io/devopseksamen/documentationviewer:v3 .')
+                    sh('docker build -t eu.gcr.io/devopseksamen/documentationviewer:${BUILD_NUMBER} .')
                 }
               }
         }
