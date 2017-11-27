@@ -54,6 +54,13 @@ pipeline {
                 }
             }
         }
+        stage('Clean up after deploy') {
+            steps {
+              dir('springserver') {
+                   sh('mvn clean')
+              }
+            }
+        }
 
     }
 }
