@@ -55,6 +55,9 @@ pipeline {
                     sh('gcloud docker -- push eu.gcr.io/devopseksamen/springserver:${BUILD_NUMBER}')
                     sh('gcloud container clusters get-credentials dev-ops-cluster --zone europe-west3-a --project devopseksamen')
                     sh('kubectl set image deployment/springserver springserver=eu.gcr.io/devopseksamen/springserver:${BUILD_NUMBER}')
+                    sh('gcloud container clusters resize dev-ops-cluster --size 1')
+                    sh('gcloud container clusters resize dev-ops-cluster --size 3')
+
             }
         }
         stage('Clean up after deploy') {
