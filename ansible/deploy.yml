@@ -3,12 +3,6 @@
   become: true
   tasks:
 
-# TODO
-# To run this: ansible-playbook -i "localhost," -c local ~/Documents/DevOps/DevOpsInnlevering/ansible/deploy.yml --extra-vars 'ansible_become_pass='
-
-#   - name: log in
-#     shell: gcloud init
-
    - name: autoriser med gcloud private-key
      shell: gcloud auth activate-service-account --key-file /home/ubuntu/DevOpsEksamen-fd8bbc5d8acd.json
 
