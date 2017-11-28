@@ -125,10 +125,10 @@
 
     <h3>Sikkerhet</h3>
     <br/>
-    <h5>Fakorer jeg ser på som bra:</h5>
+    <h5>Faktorer jeg ser på som bra:</h5>
     <p>1. Bruk av SSH Jeg benytter ssh til &aring; konfigurere serverne mine.</p>
 
-    <p>2. Ingen hardkodede passord er committet I git Og alle passord er kompliserte.</p>
+    <p>2. Ingen hardkodede passord er committet I git og alle passord er kompliserte. </p>
 
     <p>3. Service-account p&aring; google cloud Kommunikasjonen mellom jenkinsserveren og Google cloud skjer etter
         &aring; ha autentisert med en json-fil som autoriserer shellet til &aring; kommuniserer med
@@ -155,10 +155,14 @@
         mulig &aring; installere p&aring; VM&rsquo;en p&aring; byggserveren, men AWS har ganske god overv&aring;kning
         under &ldquo;monitor&rdquo;-fanen I konsollet med oversikt over alle instansene(VM&rsquo;ene).</p>
 
-    <p>6. Sikkerhetstester p&aring; kj&oslash;rende applikasjon Det hadde ogs&aring; v&aelig;rt mulig &aring; kj&oslash;re
-        automatiserte sikkerhetstester av den kj&oslash;rende applikasjonen med zenmap(port-scanning), arachni(XSS),
-        sqlmap(SQL-injection), osv. Med et program kalt gauntlt (http://gauntlt.org).</p> <br/> <br/>
+    <p>6.Det hadde ogs&aring; v&aelig;rt mulig &aring; kj&oslash;re
+        automatiserte sikkerhetstester av den kj&oslash;rende applikasjonen, i et virtuelt miljø før deployering, med zenmap(port-scanning), arachni(XSS),
+        sqlmap(SQL-injection), osv. Med et program kalt gauntlt (http://gauntlt.org).</p>
 
+    <p>7. Brukernavn kunne ha vært mindre "standard".</p>
+
+    <br/>
+    <br/>
 
     <h3>For å bygge prosjektet som containere</h3>
 
