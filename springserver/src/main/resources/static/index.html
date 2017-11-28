@@ -89,25 +89,25 @@
         deler av oppsettet enklere.</p><br/>
 
     <h3>Mulige forbedringer</h3><br/>
-    <p>1. Pushe docker-bildene fra jenkinsserveren til docker-hub Pushe docker-bildene fra jenkinsserveren til
-        docker-hub og deretter sette opp webhooks I google-cloud for &aring; hente og deployere container-bildene p&aring;
+    <p>1.  Pushe docker-bildene fra jenkinsserveren til
+        docker-hub og deretter sette opp webhooks I google cloud for &aring; hente og deployere container-bildene p&aring;
         clusteret. Det hadde gjort pipelinen litt mer &lsquo;de-coupled&rsquo;. Siden dette prosjektet er open-source, s&aring;
         hadde ikke denne l&oslash;sningen gjort noe, men hadde kildekoden v&aelig;rt skjult, s&aring; hadde det &aring;
-        pushe docker-bildene(public) til docker-hub ikke v&aelig;rt bra.</p>
+        pushe docker-bildene(public) til docker-hub ikke v&aelig;rt riktig.</p>
 
-    <p>2. Laget pods med flere docker-containere i Jeg kunne f&aring;tt react-appen documentation-viewer til &aring;
+    <p>2. Jeg kunne f&aring;tt react-appen documentation-viewer til &aring;
         snakke med springserveren ved hjelp av API-kall. Dette var den initielle tanken i prosjektet. Det var &aring; f&aring;
         react-appen(documentation-viewer) til &aring; v&aelig;re gatewayen av applikasjonen og springserveren til
         &aring; v&aelig;re &lsquo;back-end&rsquo; delen. Prosjektet ville da hatt en enkel microservice-struktur med
         hardkodede IP-addresser osv. Med andre ord, en l&oslash;sning uten eureka, zuul, rabbitMQ og andre ting som
         hadde gjort &ldquo;Over-headen&rdquo; p&aring; dette prosjektet mye st&oslash;rre. </p>
 
-    <p>3. Un&oslash;dvendig steg I jenkinsfile Det f&oslash;rste steget I jenkinsfile(sh(&lsquo;ansible-playbook
+    <p>3. Fjerne det un&oslash;dvendig steget I jenkinsfilen. Det f&oslash;rste steget I jenkinsfile(sh(&lsquo;ansible-playbook
         main.yml&rsquo;)) er helt un&oslash;dvendig &aring; kj&oslash;re som steg p&aring; en byggserver. Jeg har det
-        der for &aring; bevise at jeg kan kj&oslash;re ansible.</p>
+        der for &aring; bevise at jeg kan kj&oslash;re ansible på en byggserver.</p>
 
-    <p>4. St&oslash;rre bruk av Environment variabler St&oslash;rre bruk av Environment variabler I scripts for &aring;
-        gj&oslash;re det mer modulerbart og gjenbrukbart for andre prosjekter. F.eks. Bruke envconsul istedenfor
+    <p>4. St&oslash;rre bruk av Environment variabler I scripts for &aring;
+        gj&oslash;re de mer modulerbart og gjenbrukbare for andre prosjekter. F.eks. Bruke envconsul istedenfor
         environment variabler I jenkins-serveren.</p>
 
     <p>5. Bedre bruk av git. Hittil har jeg jobbet alene og har ikke benyttet meg av andre grener enn master. Det hadde
@@ -192,7 +192,7 @@
 
 
     <h5>2. github</h5>
-    Arkiverer koden.<br/><br/>
+    Arkiverer koden og gjør det enkelt å jobbe flere på samme kildekode(distribuert utvikling, fremfor sentralisert kildekodekontroll).<br/><br/>
 
 
     <h5>3. jenkinsserver</h5>
@@ -200,7 +200,7 @@
     5-minutt.<br/>
     Jenkinsserveren kjører stegene i jenkinsfilen. <br/>
     Blant annet å kjøre testene i koden, bygge docker-containere og deployere appen til google cloud. <br/>
-    Appen blir også skalert. <br/> <br/>
+    Appen blir også skalert på clusteret. <br/> <br/>
     <img src="AWS_Consol.bmp" height="120px"/>
     <br/> <br/>
     Det første steget(ansible-playbook main.yml) er helt unødvendig å kjøre som steg på en byggserver. <br/>
