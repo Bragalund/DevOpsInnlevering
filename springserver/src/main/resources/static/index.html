@@ -6,87 +6,163 @@
     <title>DevOps <3</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
           integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="import" href="/static/Applikasjon_Info_endepunkt.bmp">
 </head>
 <body>
 <div class="container">
-    <h1> DevOpsInnlevering </h1>
+
+
+    <h1> Devops innlevering </h1>
 
     Endepunkt: <br/>
 
-    /hostname    angir docker-container-id’en som springserveren kjører I.  <br/>
+    /hostname angir docker-container-id’en som springserveren kjører I. <a href="../hostname">  --->   hostname</a><br/>
 
-    /health      angir hvordan serveren har det. <br/>
+    /health angir hvordan serveren har det.                             <a href="../health">  --->    health</a> <br/>
 
-    /info        Gir litt info om appen. Den er stygt formattert I json. <br/>
+    /info Gir litt info om appen. Den er stygt formattert I json.       <a href="../info">  --->   info</a> <br/> <br/>
 
+    <img src="Applikasjon_Ulik_Docker_container_ID.bmp"/>
     <p>
         Hensikten med dette prosjektet er å lage en automatisert pipeline.<br/>
-        Applikasjonen er ikke viktig.
+        Applikasjonen har ikke vært i fokus.<br/><br/>
 
 
-            Beskrivelse av appen:
-            Kildekoden består av 3 moduler: <br/>
-            - ansible<br/>
-            - documentation-viewer<br/>
-            - springserver<br/>
+        Beskrivelse av appen:<br/>
+        Kildekoden består av 3 moduler: <br/>
+        - ansible<br/>
+        - documentation-viewer<br/>
+        - springserver<br/> <br/>
 
-            Jenkins-serveren min kjører på en virtuell 64-bits ubuntu-maskin på Amazon Web Services. <br/>
-            Kubernetes-clusteret og applikasjonen kjører på google cloud. <br/>
-            Hele hensikten med å kjøre byggserveren på AWS og selve appen på Google Cloud er å bevise at det er mulig.
-            <br/>
-            Det hadde vært enklere/sikrere(via internt nett) å kjøre alt på samme cloud-plattform. <br/>
+        Jenkins-serveren min kjører på en virtuell 64-bits ubuntu-maskin på Amazon Web Services. <br/>
+        Kubernetes-clusteret og applikasjonen kjører på google cloud. <br/>
+        Hele hensikten med å kjøre byggserveren på AWS og selve appen på Google Cloud er å bevise at det er mulig.
+        <br/>
+        Det hadde vært enklere/sikrere(via internt nett) å kjøre alt på samme cloud-plattform. <br/> <br/>
 
-            <h2>For å bygge prosjektet som containere</h2>
+    <h3>Hvorfor DevOps?</h3>
+    <p>Fordelen med et slikt automatisk deployment-oppsett er at det f&oslash;lger &lsquo;Continous Delivery&rsquo;-prinsippet med mange sm&aring; forbedringer over tid. Den automatiserte pipelinen gj&oslash;r det enklere for utviklere &aring; gj&oslash;re endringer som raskt ender opp I produksjon og &aring; se virkningene av dem. Det gj&oslash;r utviklingen raskere og med mindre konfigurasjon frustrasjon underveis. Det er lettere &aring; s&oslash;rge for bedre sikkerhet og mindre bugs I applikasjonen n&aring;r stegene applikasjonen m&aring; gjennom f&oslash;r den havner I produksjon er definert. Det er enklere &aring; reflektere over sikkerheten I alle stegene I deployeringsprossessen. Det er ogs&aring; enklere &aring; justere tilganger til ulike filer I prosjektet kan enklere defineres. Milj&oslash;-variabler og andre hemmeligheter er samlet p&aring; noen definerte steder og trengs ikke &aring; hardkodes. Det er enklere &aring; sette f&oslash;ringer p&aring; protokollbruk og hvordan man bruker arkiveringssystemet for kildekoden.</p>
 
-            I roten av prosjektet <br/>
+    <h3>Ting jeg har gjort som ikke er like enkelt å vise</h3>
 
-            $ docker-compose build<br/>
+    <h5>1. Opprette git-repo og initialisere git I prosjektet med ansible/bash-script.</h5>
 
-            Bygge individuelt<br/>
+    <h5>2. servere er ikke husdyr, de er g&aring;rdsdyr&rdquo;</h5>
+    <p>Installere programmer og gj&oslash;re konfigurasjon til kode med hjelp av ansible. Jeg f&oslash;ler jeg har klart &aring; overholde prinsippet: &ldquo;servere er ikke husdyr, de er g&aring;rdsdyr&rdquo; i denne oppgaven. Det er fortsatt mye konfigurasjon man m&aring; gj&oslash;re selv, men jeg har laget en anible-playbook som gj&oslash;r deler av oppsettet enklere.</p>
 
-            - I springserver-modulen:<br/>
+    <h3>Mulige forbedringer</h3>
+    <p>1. Pushe docker-bildene fra jenkinsserveren til docker-hub  Pushe docker-bildene fra jenkinsserveren til docker-hub og deretter sette opp webhooks I google-cloud for &aring; hente og deployere container-bildene p&aring; clusteret. Det hadde gjort pipelinen litt mer &lsquo;de-coupled&rsquo;. Siden dette prosjektet er open-source, s&aring; hadde ikke denne l&oslash;sningen gjort noe, men hadde kildekoden v&aelig;rt skjult, s&aring; hadde det &aring; pushe docker-bildene(public) til docker-hub ikke v&aelig;rt bra.</p>
 
-            $ mvn clean install<br/>
+    <p>2. Laget pods med flere docker-containere i Jeg kunne f&aring;tt react-appen documentation-viewer til &aring; snakke med springserveren ved hjelp av API-kall. Dette var den initielle tanken i prosjektet. Det var &aring; f&aring; react-appen(documentation-viewer) til &aring; v&aelig;re gatewayen av applikasjonen og springserveren til &aring; v&aelig;re &lsquo;back-end&rsquo; delen. Prosjektet ville da hatt en enkel microservice-struktur med hardkodede IP-addresser osv. Med andre ord, en l&oslash;sning uten eureka, zuul, rabbitMQ og andre ting som hadde gjort &ldquo;Over-headen&rdquo; p&aring; dette prosjektet mye st&oslash;rre. </p>
 
-            - I documentation-viewer-modulen:<br/>
+    <p>3. Un&oslash;dvendig steg I jenkinsfile Det f&oslash;rste steget I jenkinsfile(sh(&lsquo;ansible-playbook main.yml&rsquo;)) er helt un&oslash;dvendig &aring; kj&oslash;re som steg p&aring; en byggserver. Jeg har det der for &aring; bevise at jeg kan kj&oslash;re ansible.</p>
 
-            $ npm install<br/>
+    <p>4. St&oslash;rre bruk av Environment variabler St&oslash;rre bruk av Environment variabler I scripts for &aring; gj&oslash;re det mer modulerbart og gjenbrukbart for andre prosjekter. F.eks. Bruke envconsul istedenfor environment variabler I jenkins-serveren.</p>
 
-            $ npm run start<br/>
+    <p>5. Bedre bruk av git.  Hittil har jeg jobbet alene og har ikke benyttet meg av andre grener enn master. Det hadde v&aelig;rt mulig &aring; opprette en &ldquo;kanari&rdquo;-branch kalt development, som kunne kj&oslash;rt de samme jenkinsfile-stegene som master(produksjons-gren), bortsett fra deploy-delen.</p>
 
-            <h2> Beskrivelse av pipelinen</h2>
+    <p>6. Selenium For &aring; ende-til-ende teste applikasjonen s&aring; hadde det v&aelig;rt mulig &aring; sette opp et avsluttende steg p&aring; byggserveren som kj&oslash;rte selenium tester p&aring; den kj&oslash;rende applikasjonen. </p>
 
-            1. localhost <br/>
-            Her kan man kjøre bash/ansible-script for å sette opp github-repo og initialisere git lokalt. <br/>
-            Man kan også kjøre ansible-playbook via ssh til en remote VM for å installere de mest grunnleggende
-            programmene
-            for å kjøre dette prosjektet. <br/>
-            Man må da endre hosts:-feltet i main.yml og legge inn den hosten i /etc/ansible/hosts-fila. (hvis ansible er
-            installert på ubuntu).<br/>
+    <p>7. Et funksjonelt program som hadde skapt en form for verdi Det hadde faktisk v&aelig;rt bra om programmet hadde tilbudt noe nyttig funksjonalitet. Eks. V&aelig;rt et API eller lignende.</p>
 
-
-            #### 2. github<br/>
-            Arkiverer koden.
-
-            #### 3. jenkinsserver<br/>
-            Jenkinsserveren har webhooks til dette repoet og sjekker om det er kommet nye commits til koden hvert
-            5-minutt.<br/>
-            Jenkinsserveren kjører stegene i jenkinsfilen. <br/>
-            Blant annet å kjøre testene i koden, bygge docker-containere og deployere appen til google cloud. <br/>
-            Appen blir også skalert. <br/>
-
-            Det første steget(ansible-playbook main.yml) er helt unødvendig å kjøre som steg på en byggserver. <br/>
-            Dette skulle egentlig ha blitt kjørt som en kommando(ansible-playbook) på en egen maskin for å automatisere
-            serveroppsett. <br/>
+    <p>8. Unit og mindre integrasjonstester tidlig I pipelinen Det er viktig &aring; ha unit-tester og mindre integrasjonsstester tidlig I pipelinen, for &aring; unng&aring; at bugs/sikkerhetsrisiko havner I den kj&oslash;rende applikasjonen. Det kan stoppe store feil tidlig og spare bedriften for nedetid/kostnader.  </p>
 
 
-            #### 4. google cloud <br/>
-            Kjører kubernetes-cluster med endepunkt: 35.198.181.185 <br/>
+    <h3>Sikkerhet</h3>
+    <h5>Fakorer jeg ser på som bra:</h5>
+    <p>1. Bruk av SSH Jeg benytter ssh til &aring; konfigurere serverne mine.</p>
 
-            Det er en spring server som kjører på port 80. <br/>
+    <p>2. Ingen hardkodede passord er committet I git Og alle passord p&aring; alle tjenestene er minimum 14 karakterer I lengde og best&aring;r av store/sm&aring;/tall/spesialtegn og er ganske tilfeldige.</p>
+
+    <p>3. Service-account p&aring; google cloud Kommunikasjonen mellom jenkinsserveren og Google cloud skjer etter &aring; ha autentisert med en json-fil som autoriserer shellet til &aring; kommuniserer med DevOpsEksamen-prosjektet p&aring; Google cloud. Kommunikasjonen benytter OAUTH-protokollen(256-bit AES-kryptering).</p>
+
+    <h5>Ting som burde ha vært bedre på sikkerhetssiden av dette prosjektet:</h5>
+
+    <p>1. Byggserveren(jenkins) burde ha benyttet HTTPS  Jeg har laget et BASH script for &aring; generere selvsignert ssl-sertifikat for *compute.amazonaws.com domenet. Det er mulig &aring; sette opp en nginx-server med reverse-proxy som videresender http-traffikken internt p&aring; VM&rsquo;en til jenkins-instansen. Nginx-serveren vil da settes som eneste port som er mulig &aring; aksesseres fra internett. Ble ikke helt ferdig med det. Main.yml-scriptet installerer ogs&aring; letsencrypt, s&aring; det er ogs&aring; mulig &aring; sette opp automatisk signering og fornyelse av ssl-sertifikatet som nginx-serveren kommer til &aring; bruke. </p>
+
+    <p>2. Ikke kj&oslash;re Jenkins-brukeren med NOPASSW-instilling I sudoers-filen p&aring; VM&rsquo;en Ikke kj&oslash;re Jenkins-brukeren med NOPASSW-instilling I sudoers-filen p&aring; VM&rsquo;en. Innstillingen er n&oslash;dvendig for &aring; kj&oslash;re kubectl-kommandoer for deployering av appen til google cloud og andre sudo oppgaver I ansible-script.</p>
+
+    <p>3. Alt p&aring; samme skytjeneste Byggserver og kubernetes-cluster burde ha v&aelig;rt p&aring; samme skytjeneste. Man kunne da ha brukt det interne nettet(med interne IP-adresser) som hadde gjort trafikken mellom applikasjonene mindre utsatt for &lsquo;det store &aring;pne internett&rsquo;. Jeg har benyttet to ulike skytjenester bare for &aring; bevise at det er mulig og fordi jeg syntes det virket morsomt &aring; f&aring; det til. Fordelen med dette er at jeg fordeler datakraften/nettverkstrafikken jeg bruker, s&aring; jeg bruker mindre gratis &ldquo;credits&rdquo; p&aring; de forskjellige skytjenestene. </p>
+
+    <p>4. Overv&aring;king Loggetjeneste I applikasjonen. Applikasjonen burde ha hatt en overv&aring;kningsfunksjon. Den har det gjennom actuator I springserveren, men den er veldig enkel. ELK-stacken hadde v&aelig;rt kult &aring; implementere, men det har jeg ikke satt meg inn I pga tid. Munin p&aring; toppen av en apache-server hadde v&aelig;rt mulig &aring; installere p&aring; VM&rsquo;en p&aring; byggserveren, men AWS har ganske god overv&aring;kning under &ldquo;monitor&rdquo;-fanen I konsollet med oversikt over alle instansene(VM&rsquo;ene).</p>
+
+    <p>6. Sikkerhetstester p&aring; kj&oslash;rende applikasjon Det hadde ogs&aring; v&aelig;rt mulig &aring; kj&oslash;re automatiserte sikkerhetstester av den kj&oslash;rende applikasjonen med zenmap(port-scanning), arachni(XSS), sqlmap(SQL-injection), osv. Med et program kalt gauntlt (http://gauntlt.org).</p>
 
 
 
+
+    <h3>For å bygge prosjektet som containere</h3>
+
+    I roten av prosjektet <br/>
+
+    $ docker-compose build<br/> <br/>
+
+    <h3>Bygge individuelt</h3>
+
+    - I springserver-modulen:<br/>
+
+    $ mvn clean install<br/>
+
+    - I documentation-viewer-modulen:<br/>
+
+    $ npm install<br/>
+
+    $ npm run start<br/> <br/>
+
+    <h2> Beskrivelse av pipelinen</h2>
+
+    <h5>1. localhost </h5>
+    Her kan man kjøre bash/ansible-script for å sette opp github-repo og initialisere git lokalt. <br/>
+    Man kan også kjøre ansible-playbook via ssh til en remote VM for å installere de mest grunnleggende
+    programmene
+    for å kjøre dette prosjektet. <br/>
+    Man må da endre hosts:-feltet i main.yml og legge inn den hosten i /etc/ansible/hosts-fila. (hvis ansible er
+    installert på ubuntu).<br/><br/>
+
+
+    <h5>2. github</h5>
+    Arkiverer koden.<br/><br/>
+
+
+
+    <h5>3. jenkinsserver</h5>
+    Jenkinsserveren har webhooks til dette repoet og sjekker om det er kommet nye commits til koden hvert
+    5-minutt.<br/>
+    Jenkinsserveren kjører stegene i jenkinsfilen. <br/>
+    Blant annet å kjøre testene i koden, bygge docker-containere og deployere appen til google cloud. <br/>
+    Appen blir også skalert. <br/> <br/>
+    <img src="AWS_Consol.bmp" height="120px"/><br/>
+    Det første steget(ansible-playbook main.yml) er helt unødvendig å kjøre som steg på en byggserver. <br/>
+    Dette skulle egentlig ha blitt kjørt som en kommando(ansible-playbook) på en egen maskin for å automatisere
+    serveroppsett. <br/> <br/>
+    <img src="Jenkins_Bygger.bmp" height="600px"/><br/><br/>
+    <h5>4. google cloud </h5>
+    Kjører kubernetes-cluster med denne siden som endepunkt. <br/><br/>
+
+    Det er en spring server som kjører på port 80. <br/><br/>
+
+    <img src="Google_Cloud_Cluster.bmp"/>
+
+    <pre>
+
+
+                                     ,----..                                           .--,-``-.
+    ,---,                           /   /   \                                         /   /     '.
+  .'  .' `\                        /   .     : ,-.----.                          ,--./ ../        ;
+,---.'     \                      .   /   ;.  \\    /  \                        /  /|\ ``\  .`-    '
+|   |  .`\  |               .---..   ;   /  ` ;|   :    |  .--.--.             '  / ' \___\/   \   :
+:   : |  '  |   ,---.     /.  ./|;   |  ; \ ; ||   | .\ : /  /    '           /  / /       \   :   |
+|   ' '  ;  :  /     \  .-' . ' ||   :  | ; | '.   : |: ||  :  /`./          /  / ,        /  /   /
+'   | ;  .  | /    /  |/___/ \: |.   |  ' ' ' :|   |  \ :|  :  ;_            \ '\ \        \  \   \
+|   | :  |  '.    ' / |.   \  ' .'   ;  \; /  ||   : .  | \  \    `.          \  \ '   ___ /   :   |
+'   : | /  ; '   ;   /| \   \   ' \   \  ',  / :     |`-'  `----.   \          \  . | /   /\   /   :
+|   | '` ,/  '   |  / |  \   \     ;   :    /  :   : :    /  /`--'  /           \__\./ ,,/  ',-    .
+;   :  .'    |   :    |   \   \ |   \   \ .'   |   | :   '--'.     /                 \ ''\        ;
+|   ,.'       \   \  /     '---"     `---`     `---'.|     `--'---'                   \   \     .'
+'---'          `----'                            `---`                                 `--`-,,-'
+
+
+</pre>
 
     </p>
 </div>
