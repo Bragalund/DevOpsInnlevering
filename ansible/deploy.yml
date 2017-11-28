@@ -13,7 +13,6 @@
    - name: push docker images to container registry
      shell: gcloud docker -- push eu.gcr.io/devopseksamen/springserver:v3
      become: true
-#     shell: gcloud docker -- push eu.gcr.io/${DEV_OPS_PROJECT_ID}/documentationviewer:v3
 
    - name: choose existing cluster and get credentials
      shell: gcloud container clusters get-credentials dev-ops-cluster --zone europe-west3-a --project devopseksamen
@@ -24,11 +23,3 @@
    - name: update already running app
      shell: kubectl set image deployment/springserver springserver=eu.gcr.io/devopseksamen/springserver:v3
      #shell: kubectl expose deployment springserver --type=LoadBalancer --port 80 --target-port 8080
-
-# environment variables set
-
-# $DEV_OPS_DATACENTER
-# $DEV_OPS_PROJECT_ID
-# $DEV_OPS_CLUSTER_NAME
-
-# LATEST_DOCKER_IMAGE="docker ps -n 2"

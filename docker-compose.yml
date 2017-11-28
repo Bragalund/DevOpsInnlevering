@@ -5,12 +5,12 @@ services:
     ports:
       - "8080:8080"                        #context: springserver   # Hvilken mappe Dockerfilen befinner seg
 
-  documentationviewer:
-    build: ./documentation-viewer                            # Bygger bilde på Dockerfile
-    links:
-          - springserver:springserver
-    ports:                                     #context: documentation-viewer   # Mappen Dockerfilen befinner seg i
-      - "80:3000"                                  #dockerfile: Dockerfile          # Navnet på dockerfilen
+#  documentationviewer:
+#    build: ./documentation-viewer                            # Bygger bilde på Dockerfile
+#    links:
+#          - springserver:springserver
+#    ports:                                     #context: documentation-viewer   # Mappen Dockerfilen befinner seg i
+#      - "80:3000"                                  #dockerfile: Dockerfile          # Navnet på dockerfilen
 
 
 

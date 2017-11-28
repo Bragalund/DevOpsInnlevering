@@ -137,33 +137,3 @@
      shell: gcloud components install kubectl                       # Install kubectl with gcloud
      shell: ln -s /opt/google-cloud-sdk/bin/kubectl /usr/local/bin  # Create symlink for it
      when: stat_result_kubectl.stat.exists == False
-
-
-
-
-#   - name: add gcloud to repo
-#   - apt_repository: repo='deb http://packages.cloud.google.com/apt cloud-sdk-xenial main' state='present' filename='google-cloud-sdk' update_cache='yes'
-
-#   - name: add gcloud public key to apt
-#   - apt_key: url='https://packages.cloud.google.com/apt/doc/apt-key.gpg' state=present'
-
-
-#   - name: Install gcloud-cli
-#     apt:
-#       name: google-cloud-sdk
-#       state: present
-
-# kubectl må installeres som "component av google-cloud-sdk" for å fungere med google cloud(skytjenesten)
-# Derfor ikke mulig å installere med apt/apt-get
-
-#   - name: Install kubectl
-#     apt:
-#       name: kubectl
-#       state: present
-
-#   - name: Remove dependencies that are no longer required
-#     apt:
-#       autoremove: yes
-#       name: "*"
-#       state: latest
-#       update_cache: yes

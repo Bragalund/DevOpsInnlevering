@@ -3,13 +3,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Instal programs with ansible'){
-            steps {
-              dir('ansible'){
-                sh('ansible-playbook -i "localhost," -c local main.yml')
-              }
-            }
-        }
         stage('Test springserver') {
              tools {
                  maven "maven"
@@ -38,13 +31,6 @@ pipeline {
                 dir('springserver'){
                     sh('docker build -t eu.gcr.io/${DEV_OPS_PROJECT_ID}/springserver:${BUILD_NUMBER} .')
                   }
-              }
-        }
-        stage('Build documentation-viewer image'){
-              steps {
-                dir('documentation-viewer'){
-                    sh('docker build -t eu.gcr.io/${DEV_OPS_PROJECT_ID}/documentationviewer:${BUILD_NUMBER} .')
-                }
               }
         }
         stage('Deploy app') {
