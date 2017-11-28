@@ -11,16 +11,23 @@
 <body>
 <div class="container">
 
-
+    <br/> <br/>
     <h1> Devops innlevering </h1>
+
+    <p>Github-repoet kan finnes p&aring;: <a href="https://github.com/Bragalund/DevOpsInnlevering">https://github.com/Bragalund/DevOpsInnlevering</a>
+    </p><br/>
+
+
+    <p>Film med gjennomgang av
+        pipeline og komponentene I den: <a href="https://youtu.be/rnuZRCucUbo">https://youtu.be/rnuZRCucUbo</a></p><br/>
 
     Endepunkt: <br/>
 
-    /hostname angir docker-container-id’en som springserveren kjører I. <a href="../hostname">  --->   hostname</a><br/>
+    /hostname angir docker-container-id’en som springserveren kjører I. <a href="../hostname"> ---> hostname</a><br/>
 
-    /health angir hvordan serveren har det.                             <a href="../health">  --->    health</a> <br/>
+    /health angir hvordan serveren har det. <a href="../health"> ---> health</a> <br/>
 
-    /info Gir litt info om appen. Den er stygt formattert I json.       <a href="../info">  --->   info</a> <br/> <br/>
+    /info Gir litt info om appen. Den er stygt formattert I json. <a href="../info"> ---> info</a> <br/> <br/>
 
     <img src="Applikasjon_Ulik_Docker_container_ID.bmp"/>
     <p>
@@ -41,54 +48,107 @@
         Det hadde vært enklere/sikrere(via internt nett) å kjøre alt på samme cloud-plattform. <br/> <br/>
 
     <h3>Hvorfor DevOps?</h3>
-    <p>Fordelen med et slikt automatisk deployment-oppsett er at det f&oslash;lger &lsquo;Continous Delivery&rsquo;-prinsippet med mange sm&aring; forbedringer over tid. Den automatiserte pipelinen gj&oslash;r det enklere for utviklere &aring; gj&oslash;re endringer som raskt ender opp I produksjon og &aring; se virkningene av dem. Det gj&oslash;r utviklingen raskere og med mindre konfigurasjon frustrasjon underveis. Det er lettere &aring; s&oslash;rge for bedre sikkerhet og mindre bugs I applikasjonen n&aring;r stegene applikasjonen m&aring; gjennom f&oslash;r den havner I produksjon er definert. Det er enklere &aring; reflektere over sikkerheten I alle stegene I deployeringsprossessen. Det er ogs&aring; enklere &aring; justere tilganger til ulike filer I prosjektet kan enklere defineres. Milj&oslash;-variabler og andre hemmeligheter er samlet p&aring; noen definerte steder og trengs ikke &aring; hardkodes. Det er enklere &aring; sette f&oslash;ringer p&aring; protokollbruk og hvordan man bruker arkiveringssystemet for kildekoden.</p>
+    <p>Fordelen med et slikt automatisk deployment-oppsett er at det f&oslash;lger &lsquo;Continous Delivery&rsquo;-prinsippet
+        med mange sm&aring; forbedringer over tid. Den automatiserte pipelinen gj&oslash;r det enklere for utviklere
+        &aring; gj&oslash;re endringer som raskt ender opp I produksjon og &aring; se virkningene av dem. Det gj&oslash;r
+        utviklingen raskere og med mindre konfigurasjon frustrasjon underveis. Det er lettere &aring; s&oslash;rge for
+        bedre sikkerhet og mindre bugs I applikasjonen n&aring;r stegene applikasjonen m&aring; gjennom f&oslash;r den
+        havner I produksjon er definert. Det er enklere &aring; reflektere over sikkerheten I alle stegene I
+        deployeringsprossessen. Det er ogs&aring; enklere &aring; justere tilganger til ulike filer I prosjektet kan
+        enklere defineres. Milj&oslash;-variabler og andre hemmeligheter er samlet p&aring; noen definerte steder og
+        trengs ikke &aring; hardkodes. Det er enklere &aring; sette f&oslash;ringer p&aring; protokollbruk og hvordan
+        man bruker arkiveringssystemet for kildekoden.</p>
 
     <h3>Ting jeg har gjort som ikke er like enkelt å vise</h3>
 
     <h5>1. Opprette git-repo og initialisere git I prosjektet med ansible/bash-script.</h5>
 
     <h5>2. servere er ikke husdyr, de er g&aring;rdsdyr&rdquo;</h5>
-    <p>Installere programmer og gj&oslash;re konfigurasjon til kode med hjelp av ansible. Jeg f&oslash;ler jeg har klart &aring; overholde prinsippet: &ldquo;servere er ikke husdyr, de er g&aring;rdsdyr&rdquo; i denne oppgaven. Det er fortsatt mye konfigurasjon man m&aring; gj&oslash;re selv, men jeg har laget en anible-playbook som gj&oslash;r deler av oppsettet enklere.</p>
+    <p>Installere programmer og gj&oslash;re konfigurasjon til kode med hjelp av ansible. Jeg f&oslash;ler jeg har klart
+        &aring; overholde prinsippet: &ldquo;servere er ikke husdyr, de er g&aring;rdsdyr&rdquo; i denne oppgaven. Det
+        er fortsatt mye konfigurasjon man m&aring; gj&oslash;re selv, men jeg har laget en anible-playbook som gj&oslash;r
+        deler av oppsettet enklere.</p>
 
     <h3>Mulige forbedringer</h3>
-    <p>1. Pushe docker-bildene fra jenkinsserveren til docker-hub  Pushe docker-bildene fra jenkinsserveren til docker-hub og deretter sette opp webhooks I google-cloud for &aring; hente og deployere container-bildene p&aring; clusteret. Det hadde gjort pipelinen litt mer &lsquo;de-coupled&rsquo;. Siden dette prosjektet er open-source, s&aring; hadde ikke denne l&oslash;sningen gjort noe, men hadde kildekoden v&aelig;rt skjult, s&aring; hadde det &aring; pushe docker-bildene(public) til docker-hub ikke v&aelig;rt bra.</p>
+    <p>1. Pushe docker-bildene fra jenkinsserveren til docker-hub Pushe docker-bildene fra jenkinsserveren til
+        docker-hub og deretter sette opp webhooks I google-cloud for &aring; hente og deployere container-bildene p&aring;
+        clusteret. Det hadde gjort pipelinen litt mer &lsquo;de-coupled&rsquo;. Siden dette prosjektet er open-source, s&aring;
+        hadde ikke denne l&oslash;sningen gjort noe, men hadde kildekoden v&aelig;rt skjult, s&aring; hadde det &aring;
+        pushe docker-bildene(public) til docker-hub ikke v&aelig;rt bra.</p>
 
-    <p>2. Laget pods med flere docker-containere i Jeg kunne f&aring;tt react-appen documentation-viewer til &aring; snakke med springserveren ved hjelp av API-kall. Dette var den initielle tanken i prosjektet. Det var &aring; f&aring; react-appen(documentation-viewer) til &aring; v&aelig;re gatewayen av applikasjonen og springserveren til &aring; v&aelig;re &lsquo;back-end&rsquo; delen. Prosjektet ville da hatt en enkel microservice-struktur med hardkodede IP-addresser osv. Med andre ord, en l&oslash;sning uten eureka, zuul, rabbitMQ og andre ting som hadde gjort &ldquo;Over-headen&rdquo; p&aring; dette prosjektet mye st&oslash;rre. </p>
+    <p>2. Laget pods med flere docker-containere i Jeg kunne f&aring;tt react-appen documentation-viewer til &aring;
+        snakke med springserveren ved hjelp av API-kall. Dette var den initielle tanken i prosjektet. Det var &aring; f&aring;
+        react-appen(documentation-viewer) til &aring; v&aelig;re gatewayen av applikasjonen og springserveren til
+        &aring; v&aelig;re &lsquo;back-end&rsquo; delen. Prosjektet ville da hatt en enkel microservice-struktur med
+        hardkodede IP-addresser osv. Med andre ord, en l&oslash;sning uten eureka, zuul, rabbitMQ og andre ting som
+        hadde gjort &ldquo;Over-headen&rdquo; p&aring; dette prosjektet mye st&oslash;rre. </p>
 
-    <p>3. Un&oslash;dvendig steg I jenkinsfile Det f&oslash;rste steget I jenkinsfile(sh(&lsquo;ansible-playbook main.yml&rsquo;)) er helt un&oslash;dvendig &aring; kj&oslash;re som steg p&aring; en byggserver. Jeg har det der for &aring; bevise at jeg kan kj&oslash;re ansible.</p>
+    <p>3. Un&oslash;dvendig steg I jenkinsfile Det f&oslash;rste steget I jenkinsfile(sh(&lsquo;ansible-playbook
+        main.yml&rsquo;)) er helt un&oslash;dvendig &aring; kj&oslash;re som steg p&aring; en byggserver. Jeg har det
+        der for &aring; bevise at jeg kan kj&oslash;re ansible.</p>
 
-    <p>4. St&oslash;rre bruk av Environment variabler St&oslash;rre bruk av Environment variabler I scripts for &aring; gj&oslash;re det mer modulerbart og gjenbrukbart for andre prosjekter. F.eks. Bruke envconsul istedenfor environment variabler I jenkins-serveren.</p>
+    <p>4. St&oslash;rre bruk av Environment variabler St&oslash;rre bruk av Environment variabler I scripts for &aring;
+        gj&oslash;re det mer modulerbart og gjenbrukbart for andre prosjekter. F.eks. Bruke envconsul istedenfor
+        environment variabler I jenkins-serveren.</p>
 
-    <p>5. Bedre bruk av git.  Hittil har jeg jobbet alene og har ikke benyttet meg av andre grener enn master. Det hadde v&aelig;rt mulig &aring; opprette en &ldquo;kanari&rdquo;-branch kalt development, som kunne kj&oslash;rt de samme jenkinsfile-stegene som master(produksjons-gren), bortsett fra deploy-delen.</p>
+    <p>5. Bedre bruk av git. Hittil har jeg jobbet alene og har ikke benyttet meg av andre grener enn master. Det hadde
+        v&aelig;rt mulig &aring; opprette en &ldquo;kanari&rdquo;-branch kalt development, som kunne kj&oslash;rt de
+        samme jenkinsfile-stegene som master(produksjons-gren), bortsett fra deploy-delen.</p>
 
-    <p>6. Selenium For &aring; ende-til-ende teste applikasjonen s&aring; hadde det v&aelig;rt mulig &aring; sette opp et avsluttende steg p&aring; byggserveren som kj&oslash;rte selenium tester p&aring; den kj&oslash;rende applikasjonen. </p>
+    <p>6. Selenium For &aring; ende-til-ende teste applikasjonen s&aring; hadde det v&aelig;rt mulig &aring; sette opp
+        et avsluttende steg p&aring; byggserveren som kj&oslash;rte selenium tester p&aring; den kj&oslash;rende
+        applikasjonen. </p>
 
-    <p>7. Et funksjonelt program som hadde skapt en form for verdi Det hadde faktisk v&aelig;rt bra om programmet hadde tilbudt noe nyttig funksjonalitet. Eks. V&aelig;rt et API eller lignende.</p>
+    <p>7. Et funksjonelt program som hadde skapt en form for verdi Det hadde faktisk v&aelig;rt bra om programmet hadde
+        tilbudt noe nyttig funksjonalitet. Eks. V&aelig;rt et API eller lignende.</p>
 
-    <p>8. Unit og mindre integrasjonstester tidlig I pipelinen Det er viktig &aring; ha unit-tester og mindre integrasjonsstester tidlig I pipelinen, for &aring; unng&aring; at bugs/sikkerhetsrisiko havner I den kj&oslash;rende applikasjonen. Det kan stoppe store feil tidlig og spare bedriften for nedetid/kostnader.  </p>
+    <p>8. Unit og mindre integrasjonstester tidlig I pipelinen Det er viktig &aring; ha unit-tester og mindre
+        integrasjonsstester tidlig I pipelinen, for &aring; unng&aring; at bugs/sikkerhetsrisiko havner I den kj&oslash;rende
+        applikasjonen. Det kan stoppe store feil tidlig og spare bedriften for nedetid/kostnader. </p>
 
 
     <h3>Sikkerhet</h3>
     <h5>Fakorer jeg ser på som bra:</h5>
     <p>1. Bruk av SSH Jeg benytter ssh til &aring; konfigurere serverne mine.</p>
 
-    <p>2. Ingen hardkodede passord er committet I git Og alle passord p&aring; alle tjenestene er minimum 14 karakterer I lengde og best&aring;r av store/sm&aring;/tall/spesialtegn og er ganske tilfeldige.</p>
+    <p>2. Ingen hardkodede passord er committet I git Og alle passord p&aring; alle tjenestene er minimum 14 karakterer
+        I lengde og best&aring;r av store/sm&aring;/tall/spesialtegn og er ganske tilfeldige.</p>
 
-    <p>3. Service-account p&aring; google cloud Kommunikasjonen mellom jenkinsserveren og Google cloud skjer etter &aring; ha autentisert med en json-fil som autoriserer shellet til &aring; kommuniserer med DevOpsEksamen-prosjektet p&aring; Google cloud. Kommunikasjonen benytter OAUTH-protokollen(256-bit AES-kryptering).</p>
+    <p>3. Service-account p&aring; google cloud Kommunikasjonen mellom jenkinsserveren og Google cloud skjer etter
+        &aring; ha autentisert med en json-fil som autoriserer shellet til &aring; kommuniserer med
+        DevOpsEksamen-prosjektet p&aring; Google cloud. Kommunikasjonen benytter OAUTH-protokollen(256-bit
+        AES-kryptering).</p>
 
     <h5>Ting som burde ha vært bedre på sikkerhetssiden av dette prosjektet:</h5>
 
-    <p>1. Byggserveren(jenkins) burde ha benyttet HTTPS  Jeg har laget et BASH script for &aring; generere selvsignert ssl-sertifikat for *compute.amazonaws.com domenet. Det er mulig &aring; sette opp en nginx-server med reverse-proxy som videresender http-traffikken internt p&aring; VM&rsquo;en til jenkins-instansen. Nginx-serveren vil da settes som eneste port som er mulig &aring; aksesseres fra internett. Ble ikke helt ferdig med det. Main.yml-scriptet installerer ogs&aring; letsencrypt, s&aring; det er ogs&aring; mulig &aring; sette opp automatisk signering og fornyelse av ssl-sertifikatet som nginx-serveren kommer til &aring; bruke. </p>
+    <p>1. Byggserveren(jenkins) burde ha benyttet HTTPS Jeg har laget et BASH script for &aring; generere selvsignert
+        ssl-sertifikat for *compute.amazonaws.com domenet. Det er mulig &aring; sette opp en nginx-server med
+        reverse-proxy som videresender http-traffikken internt p&aring; VM&rsquo;en til jenkins-instansen.
+        Nginx-serveren vil da settes som eneste port som er mulig &aring; aksesseres fra internett. Ble ikke helt ferdig
+        med det. Main.yml-scriptet installerer ogs&aring; letsencrypt, s&aring; det er ogs&aring; mulig &aring; sette
+        opp automatisk signering og fornyelse av ssl-sertifikatet som nginx-serveren kommer til &aring; bruke. </p>
 
-    <p>2. Ikke kj&oslash;re Jenkins-brukeren med NOPASSW-instilling I sudoers-filen p&aring; VM&rsquo;en Ikke kj&oslash;re Jenkins-brukeren med NOPASSW-instilling I sudoers-filen p&aring; VM&rsquo;en. Innstillingen er n&oslash;dvendig for &aring; kj&oslash;re kubectl-kommandoer for deployering av appen til google cloud og andre sudo oppgaver I ansible-script.</p>
+    <p>2. Ikke kj&oslash;re Jenkins-brukeren med NOPASSW-instilling I sudoers-filen p&aring; VM&rsquo;en Ikke kj&oslash;re
+        Jenkins-brukeren med NOPASSW-instilling I sudoers-filen p&aring; VM&rsquo;en. Innstillingen er n&oslash;dvendig
+        for &aring; kj&oslash;re kubectl-kommandoer for deployering av appen til google cloud og andre sudo oppgaver I
+        ansible-script.</p>
 
-    <p>3. Alt p&aring; samme skytjeneste Byggserver og kubernetes-cluster burde ha v&aelig;rt p&aring; samme skytjeneste. Man kunne da ha brukt det interne nettet(med interne IP-adresser) som hadde gjort trafikken mellom applikasjonene mindre utsatt for &lsquo;det store &aring;pne internett&rsquo;. Jeg har benyttet to ulike skytjenester bare for &aring; bevise at det er mulig og fordi jeg syntes det virket morsomt &aring; f&aring; det til. Fordelen med dette er at jeg fordeler datakraften/nettverkstrafikken jeg bruker, s&aring; jeg bruker mindre gratis &ldquo;credits&rdquo; p&aring; de forskjellige skytjenestene. </p>
+    <p>3. Alt p&aring; samme skytjeneste Byggserver og kubernetes-cluster burde ha v&aelig;rt p&aring; samme
+        skytjeneste. Man kunne da ha brukt det interne nettet(med interne IP-adresser) som hadde gjort trafikken mellom
+        applikasjonene mindre utsatt for &lsquo;det store &aring;pne internett&rsquo;. Jeg har benyttet to ulike
+        skytjenester bare for &aring; bevise at det er mulig og fordi jeg syntes det virket morsomt &aring; f&aring; det
+        til. Fordelen med dette er at jeg fordeler datakraften/nettverkstrafikken jeg bruker, s&aring; jeg bruker mindre
+        gratis &ldquo;credits&rdquo; p&aring; de forskjellige skytjenestene. </p>
 
-    <p>4. Overv&aring;king Loggetjeneste I applikasjonen. Applikasjonen burde ha hatt en overv&aring;kningsfunksjon. Den har det gjennom actuator I springserveren, men den er veldig enkel. ELK-stacken hadde v&aelig;rt kult &aring; implementere, men det har jeg ikke satt meg inn I pga tid. Munin p&aring; toppen av en apache-server hadde v&aelig;rt mulig &aring; installere p&aring; VM&rsquo;en p&aring; byggserveren, men AWS har ganske god overv&aring;kning under &ldquo;monitor&rdquo;-fanen I konsollet med oversikt over alle instansene(VM&rsquo;ene).</p>
+    <p>4. Overv&aring;king Loggetjeneste I applikasjonen. Applikasjonen burde ha hatt en overv&aring;kningsfunksjon. Den
+        har det gjennom actuator I springserveren, men den er veldig enkel. ELK-stacken hadde v&aelig;rt kult &aring;
+        implementere, men det har jeg ikke satt meg inn I pga tid. Munin p&aring; toppen av en apache-server hadde v&aelig;rt
+        mulig &aring; installere p&aring; VM&rsquo;en p&aring; byggserveren, men AWS har ganske god overv&aring;kning
+        under &ldquo;monitor&rdquo;-fanen I konsollet med oversikt over alle instansene(VM&rsquo;ene).</p>
 
-    <p>6. Sikkerhetstester p&aring; kj&oslash;rende applikasjon Det hadde ogs&aring; v&aelig;rt mulig &aring; kj&oslash;re automatiserte sikkerhetstester av den kj&oslash;rende applikasjonen med zenmap(port-scanning), arachni(XSS), sqlmap(SQL-injection), osv. Med et program kalt gauntlt (http://gauntlt.org).</p>
-
-
+    <p>6. Sikkerhetstester p&aring; kj&oslash;rende applikasjon Det hadde ogs&aring; v&aelig;rt mulig &aring; kj&oslash;re
+        automatiserte sikkerhetstester av den kj&oslash;rende applikasjonen med zenmap(port-scanning), arachni(XSS),
+        sqlmap(SQL-injection), osv. Med et program kalt gauntlt (http://gauntlt.org).</p>
 
 
     <h3>For å bygge prosjektet som containere</h3>
@@ -122,7 +182,6 @@
 
     <h5>2. github</h5>
     Arkiverer koden.<br/><br/>
-
 
 
     <h5>3. jenkinsserver</h5>
