@@ -6,7 +6,6 @@
     <title>DevOps <3</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
           integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <link rel="import" href="/static/Applikasjon_Info_endepunkt.bmp">
 </head>
 <body>
 <div class="container">
@@ -99,10 +98,7 @@
         et avsluttende steg p&aring; byggserveren som kj&oslash;rte selenium tester p&aring; den kj&oslash;rende
         applikasjonen. </p>
 
-    <p>7. Et funksjonelt program som hadde skapt en form for verdi Det hadde faktisk v&aelig;rt bra om programmet hadde
-        tilbudt noe nyttig funksjonalitet. Eks. V&aelig;rt et API eller lignende.</p>
-
-    <p>8. Unit og mindre integrasjonstester tidlig I pipelinen Det er viktig &aring; ha unit-tester og mindre
+    <p>7. Unit og mindre integrasjonstester tidlig I pipelinen Det er viktig &aring; ha unit-tester og mindre
         integrasjonsstester tidlig I pipelinen, for &aring; unng&aring; at bugs/sikkerhetsrisiko havner I den kj&oslash;rende
         applikasjonen. Det kan stoppe store feil tidlig og spare bedriften for nedetid/kostnader. </p>
 
@@ -121,17 +117,9 @@
 
     <h5>Ting som burde ha vært bedre på sikkerhetssiden av dette prosjektet:</h5>
 
-    <p>1. Byggserveren(jenkins) burde ha benyttet HTTPS Jeg har laget et BASH script for &aring; generere selvsignert
-        ssl-sertifikat for *compute.amazonaws.com domenet. Det er mulig &aring; sette opp en nginx-server med
-        reverse-proxy som videresender http-traffikken internt p&aring; VM&rsquo;en til jenkins-instansen.
-        Nginx-serveren vil da settes som eneste port som er mulig &aring; aksesseres fra internett. Ble ikke helt ferdig
-        med det. Main.yml-scriptet installerer ogs&aring; letsencrypt, s&aring; det er ogs&aring; mulig &aring; sette
-        opp automatisk signering og fornyelse av ssl-sertifikatet som nginx-serveren kommer til &aring; bruke. </p>
+    <p>1. Står i dokument. </p>
 
-    <p>2. Ikke kj&oslash;re Jenkins-brukeren med NOPASSW-instilling I sudoers-filen p&aring; VM&rsquo;en Ikke kj&oslash;re
-        Jenkins-brukeren med NOPASSW-instilling I sudoers-filen p&aring; VM&rsquo;en. Innstillingen er n&oslash;dvendig
-        for &aring; kj&oslash;re kubectl-kommandoer for deployering av appen til google cloud og andre sudo oppgaver I
-        ansible-script.</p>
+    <p>2. Står i dokument.  </p>
 
     <p>3. Alt p&aring; samme skytjeneste Byggserver og kubernetes-cluster burde ha v&aelig;rt p&aring; samme
         skytjeneste. Man kunne da ha brukt det interne nettet(med interne IP-adresser) som hadde gjort trafikken mellom
