@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:p="http://www.w3.org/1999/html"
+      xmlns:spring="http://jboss.org/xml/ns/javax/validation/mapping">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>DevOps <3</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+          integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1> DevOpsInnlevering </h1>
+
+    Endepunkt: <br/>
+
+    /hostname    angir docker-container-id’en som springserveren kjører I.  <br/>
+
+    /health      angir hvordan serveren har det. <br/>
+
+    /info        Gir litt info om appen. Den er stygt formattert I json. <br/>
+
+    <p>
+        Hensikten med dette prosjektet er å lage en automatisert pipeline.<br/>
+        Applikasjonen er ikke viktig.
+
+
+            Beskrivelse av appen:
+            Kildekoden består av 3 moduler: <br/>
+            - ansible<br/>
+            - documentation-viewer<br/>
+            - springserver<br/>
+
+            Jenkins-serveren min kjører på en virtuell 64-bits ubuntu-maskin på Amazon Web Services. <br/>
+            Kubernetes-clusteret og applikasjonen kjører på google cloud. <br/>
+            Hele hensikten med å kjøre byggserveren på AWS og selve appen på Google Cloud er å bevise at det er mulig.
+            <br/>
+            Det hadde vært enklere/sikrere(via internt nett) å kjøre alt på samme cloud-plattform. <br/>
+
+            <h2>For å bygge prosjektet som containere</h2>
+
+            I roten av prosjektet <br/>
+
+            $ docker-compose build<br/>
+
+            Bygge individuelt<br/>
+
+            - I springserver-modulen:<br/>
+
+            $ mvn clean install<br/>
+
+            - I documentation-viewer-modulen:<br/>
+
+            $ npm install<br/>
+
+            $ npm run start<br/>
+
+            <h2> Beskrivelse av pipelinen</h2>
+
+            1. localhost <br/>
+            Her kan man kjøre bash/ansible-script for å sette opp github-repo og initialisere git lokalt. <br/>
+            Man kan også kjøre ansible-playbook via ssh til en remote VM for å installere de mest grunnleggende
+            programmene
+            for å kjøre dette prosjektet. <br/>
+            Man må da endre hosts:-feltet i main.yml og legge inn den hosten i /etc/ansible/hosts-fila. (hvis ansible er
+            installert på ubuntu).<br/>
+
+
+            #### 2. github<br/>
+            Arkiverer koden.
+
+            #### 3. jenkinsserver<br/>
+            Jenkinsserveren har webhooks til dette repoet og sjekker om det er kommet nye commits til koden hvert
+            5-minutt.<br/>
+            Jenkinsserveren kjører stegene i jenkinsfilen. <br/>
+            Blant annet å kjøre testene i koden, bygge docker-containere og deployere appen til google cloud. <br/>
+            Appen blir også skalert. <br/>
+
+            Det første steget(ansible-playbook main.yml) er helt unødvendig å kjøre som steg på en byggserver. <br/>
+            Dette skulle egentlig ha blitt kjørt som en kommando(ansible-playbook) på en egen maskin for å automatisere
+            serveroppsett. <br/>
+
+
+            #### 4. google cloud <br/>
+            Kjører kubernetes-cluster med endepunkt: 35.198.181.185 <br/>
+
+            Det er en spring server som kjører på port 80. <br/>
+
+
+
+
+    </p>
+</div>
+</body>
+</html>
