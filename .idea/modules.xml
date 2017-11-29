@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ansible/ansible.iml" filepath="$PROJECT_DIR$/ansible/ansible.iml" />
-      <module fileurl="file://$PROJECT_DIR$/documentation-viewer/documentation-viewer.iml" filepath="$PROJECT_DIR$/documentation-viewer/documentation-viewer.iml" />
       <module fileurl="file://$PROJECT_DIR$/springserver/springserver.iml" filepath="$PROJECT_DIR$/springserver/springserver.iml" />
     </modules>
   </component>

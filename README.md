@@ -3,6 +3,7 @@
 Hensikten med dette prosjektet er å lage en automatisert pipeline.<br/>
 Applikasjonen er ikke viktig.
 
+Den kan finnes på http://35.198.181.185
 
 ### Beskrivelse av appen:
 Kildekoden består av 3 moduler:

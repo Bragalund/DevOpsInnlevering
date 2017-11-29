@@ -86,7 +86,10 @@
     <p>Installere programmer og gj&oslash;re konfigurasjon til kode med hjelp av ansible. Jeg f&oslash;ler jeg har klart
         &aring; overholde prinsippet: &ldquo;servere er ikke husdyr, de er g&aring;rdsdyr&rdquo; i denne oppgaven. Det
         er fortsatt mye konfigurasjon man m&aring; gj&oslash;re selv, men jeg har laget en anible-playbook som gj&oslash;r
-        deler av oppsettet enklere.</p><br/>
+        deler av oppsettet enklere. Jeg har blant annet laget en ny VM på aws, kjørt ansible-scriptet mitt og fått prosjektet til å bygge ganske fort.
+        Jeg fant selvfølgelig noen feil, som muligens har blitt fikset innen leveringsfristen til dette prosjektet,
+        fordi automatisk byggserveroppsett er superawesome og effektivt.
+    </p><br/>
 
     <h3>Mulige forbedringer</h3><br/>
     <p>1.  Pushe docker-bildene fra jenkinsserveren til
@@ -95,8 +98,9 @@
         hadde ikke denne l&oslash;sningen gjort noe, men hadde kildekoden v&aelig;rt skjult, s&aring; hadde det &aring;
         pushe docker-bildene(public) til docker-hub ikke v&aelig;rt riktig.</p>
 
-    <p>2. Jeg kunne f&aring;tt react-appen documentation-viewer til &aring;
-        snakke med springserveren ved hjelp av API-kall. Dette var den initielle tanken i prosjektet. Det var &aring; f&aring;
+    <p>2. Documentation-viewer-modulen er blitt fjernet, men jeg kunne f&aring;tt react-appen documentation-viewer til &aring;
+        snakke med springserveren ved hjelp av API-kall. Dette var den initielle tanken i prosjektet. Jeg fjernet den, fordi død kode er en potensiell risiko for prosjektet.
+        Hensikten med modulen var &aring; f&aring;
         react-appen(documentation-viewer) til &aring; v&aelig;re gatewayen av applikasjonen og springserveren til
         &aring; v&aelig;re &lsquo;back-end&rsquo; delen. Prosjektet ville da hatt en enkel microservice-struktur med
         hardkodede IP-addresser osv. Med andre ord, en l&oslash;sning uten eureka, zuul, rabbitMQ og andre ting som
@@ -110,9 +114,9 @@
         gj&oslash;re de mer modulerbart og gjenbrukbare for andre prosjekter. F.eks. Bruke envconsul istedenfor
         environment variabler I jenkins-serveren.</p>
 
-    <p>5. Bedre bruk av git. Hittil har jeg jobbet alene og har ikke benyttet meg av andre grener enn master. Det hadde
-        v&aelig;rt mulig &aring; opprette en &ldquo;kanari&rdquo;-branch kalt development, som kunne kj&oslash;rt de
-        samme jenkinsfile-stegene som master(produksjons-gren), bortsett fra deploy-delen.</p>
+    <p>5. Bedre bruk av git. Hittil har jeg jobbet alene og behovet for å benytte flere grener i git enn master har virket trivielt.
+        Jeg opprettet til slutt en development-branch, som jeg kommer til å sette opp en kanari-pipeline for. Den hadde gjort det samme som master,
+        bortsett fra deploy-delen. Hensikten ville vært å få tilbakemelding når nye feature-branches implementeres i prosjektet.</p>
 
     <p>6. Selenium For &aring; ende-til-ende teste applikasjonen s&aring; hadde det v&aelig;rt mulig &aring; sette opp
         et avsluttende steg p&aring; byggserveren som kj&oslash;rte selenium tester p&aring; den kj&oslash;rende
@@ -135,31 +139,39 @@
         DevOpsEksamen-prosjektet p&aring; Google cloud. Kommunikasjonen benytter OAUTH-protokollen(256-bit
         AES-kryptering).</p>
 
+    <p>4. Byggserver benytter https og ssl-sertifikat og nginx-serveren fungerer selv om domenet og ip-addressen endres hver gang VM'en restartes.
+        Hensikten med dette er å gjøre innlogging på byggserveren kryptert, men det er selvfølgelig ikke en sikker løsning.
+          Det er bedre om man oppretter et sertifikat som er signert av en CA, men da må man registrere domene for byggserveren.
+        Jeg jobber med å lage et automatisk setup med letsencrypt for å få til signering automatisk, når VM'en starter opp med ny ip-addresse.
+    </p>
+
+    <img height="300px" src="https_jenkins.bmp"/>
+
+    <br/> <br/>
+
     <h5>Ting som burde ha vært bedre på sikkerhetssiden av dette prosjektet:</h5>
 
-    <p>1. Står i dokument. </p>
+    <p>1. Står i dokument. Kan ikke skrive dette her. </p>
 
-    <p>2. Står i dokument. </p>
-
-    <p>3. Alt p&aring; samme skytjeneste Byggserver og kubernetes-cluster burde ha v&aelig;rt p&aring; samme
+    <p>2. Alt p&aring; samme skytjeneste Byggserver og kubernetes-cluster burde ha v&aelig;rt p&aring; samme
         skytjeneste. Man kunne da ha brukt det interne nettet(med interne IP-adresser) som hadde gjort trafikken mellom
         applikasjonene mindre utsatt for &lsquo;det store &aring;pne internett&rsquo;. Jeg har benyttet to ulike
         skytjenester bare for &aring; bevise at det er mulig og fordi jeg syntes det virket morsomt &aring; f&aring; det
         til. Fordelen med dette er at jeg fordeler datakraften/nettverkstrafikken jeg bruker, s&aring; jeg bruker mindre
         gratis &ldquo;credits&rdquo; p&aring; de forskjellige skytjenestene. </p>
 
-    <p>4. Overv&aring;king og loggetjeneste I applikasjonen kunne vært bedre. Applikasjonen burde ha hatt en overv&aring;kningsfunksjon
+    <p>3. Overv&aring;king og loggetjeneste I applikasjonen kunne vært bedre. Applikasjonen burde ha hatt en overv&aring;kningsfunksjon
         enn bare google cloud sin overvåkning av clusteret og google compute API.
         Springserveren benytter actuator, men den er veldig enkel. ELK-stacken hadde v&aelig;rt kult &aring;
         implementere, men det har jeg ikke satt meg inn I pga tid. Munin p&aring; toppen av en apache-server hadde v&aelig;rt
         mulig &aring; installere p&aring; VM&rsquo;en p&aring; byggserveren, men AWS har ganske god overv&aring;kning
         under &ldquo;monitor&rdquo;-fanen I konsollet med oversikt over alle instansene(VM&rsquo;ene).</p>
 
-    <p>6.Det hadde ogs&aring; v&aelig;rt mulig &aring; kj&oslash;re
+    <p>4.Det hadde ogs&aring; v&aelig;rt mulig &aring; kj&oslash;re
         automatiserte sikkerhetstester av den kj&oslash;rende applikasjonen, i et virtuelt miljø før deployering, med zenmap(port-scanning), arachni(XSS),
         sqlmap(SQL-injection), osv. Med et program kalt gauntlt (http://gauntlt.org).</p>
 
-    <p>7. Brukernavn kunne ha vært mindre "standard".</p>
+    <p>5. Jeg har prøvd å holde brukernavn så lite standard som mulig.</p>
 
     <br/>
     <br/>
